@@ -50,7 +50,7 @@ function capitalize(str) {
 }
 
 // ========= Bagian 2: Koneksi MQTT via WebSocket =========
-const mqttBrokerUrl = 'wss://d69e9399d9e24e8f8ea58ef3424a9324.s1.eu.hivemq.cloud:8884/mqtt';
+const mqttBrokerUrl = 'wss://94b3a6f75c324d08b52109ee28ae0e35.s1.eu.hivemq.cloud:8884/mqtt';
 // Jika broker Anda menggunakan TLS, ganti menjadi 'wss://server.landslidemonit.web.id:8083' (misalnya)
 
 const mqttOptions = {
