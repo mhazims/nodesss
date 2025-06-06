@@ -1,4 +1,12 @@
-// ========= Bagian 1: Inisialisasi Chart.js =========
+// ===============================
+//  script1.js (di‐update)
+// ===============================
+
+// ======= Bagian 0: Sesuaikan Node yang Akan Ditampilkan =======
+const NODE_ID = 'node2';  
+// Jika ingin gunakan untuk node2, cukup ganti menjadi: const NODE_ID = 'node2';
+
+// ======= Bagian 1: Inisialisasi Chart.js untuk Node Ini =======
 const charts = {};
 
 function createGauge(id) {
@@ -24,20 +32,21 @@ function createGauge(id) {
   });
 }
 
-// Buat empat gauge untuk masing-masing sensor
+// Karena HTML Anda punya empat gauge dengan ID: 
+//   'curahHujan', 'kelembaban', 'getaran', 'kemiringan',
+// maka kita inisialisasi semua di sini:
 charts.curahHujan = createGauge('curahHujan');
-charts.kelembaban   = createGauge('kelembaban');
-charts.getaran      = createGauge('getaran');
-charts.kemiringan   = createGauge('kemiringan');
+charts.kelembaban  = createGauge('kelembaban');
+charts.getaran     = createGauge('getaran');
+charts.kemiringan  = createGauge('kemiringan');
 
 function updateGauge(name, value) {
   if (charts[name]) {
-    // Update nilai pada Chart.js
     charts[name].data.datasets[0].data[0] = value;
     charts[name].data.datasets[0].data[1] = 100 - value;
     charts[name].update();
-    // Update teks di bawah gauge
-    document.getElementById(name + 'Val').textContent = `${capitalize(name)}: ${value}`;
+    document.getElementById(name + 'Val').textContent =
+      `${capitalize(name)}: ${value}`;
   }
 }
 
@@ -55,7 +64,7 @@ const mqttBrokerUrl = 'wss://94b3a6f75c324d08b52109ee28ae0e35.s1.eu.hivemq.cloud
 
 const mqttOptions = {
   keepalive: 60,
-//   clientId: 'dashboard_node1_' + Math.random().toString(16).substr(2, 8),
+//   clientId: 'dashboard_node2_' + Math.random().toString(16).substr(2, 8),
   clientId: '7d05d137-89bf-460f-8ac2-1ebf0aec42b9',
   reconnectPeriod: 1000,  // coba koneksi ulang tiap 1 detik jika terputus
   clean: true,
@@ -64,12 +73,19 @@ const mqttOptions = {
 };
 
 
+
 const client = mqtt.connect(mqttBrokerUrl, mqttOptions);
 
 client.on('connect', () => {
-  console.log('🚀 Terhubung ke Broker MQTT via WebSocket');
-  // Daftarkan topik-topik yang ingin disubscribe
-  client.subscribe('node2', { qos: 0 });
+  console.log(`🚀 Terhubung ke Broker MQTT (Node: ${NODE_ID})`);
+  // Subscribe hanya pada topik sesuai NODE_ID
+  client.subscribe(NODE_ID, { qos: 0 }, (err) => {
+    if (err) {
+      console.error('❌ Gagal subscribe topik:', NODE_ID, err);
+    } else {
+      console.log('✅ Berhasil subscribe topik:', NODE_ID);
+    }
+  });
 });
 
 client.on('error', (err) => {
@@ -82,15 +98,17 @@ client.on('reconnect', () => {
 
 client.on('message', (topic, payload) => {
   try {
+    // Tujuan kita hanya memproses pesan dari topik yang sama dengan NODE_ID
+    if (topic !== NODE_ID) return;
+
     const message = payload.toString();
     const parsed  = JSON.parse(message);
-
-    // ---- Sesuaikan parsing: 
-    // parsed.data adalah objek { suhu:…, curahHujan:…, kelembaban:…, getaran:…, kemiringan:… }
-    if (parsed.node === 'node2' && parsed.data) {
+    // Diasumsikan payload JSON-nya selalu berformat:
+    //   { "node": "node2", "data": { suhu:…, curahHujan:…, kelembaban:…, getaran:…, kemiringan:… } }
+    // Pastikan 'parsed.node' sama dengan NODE_ID sebelum update UI
+    if (parsed.node === NODE_ID && parsed.data) {
       const d = parsed.data;
 
-      // Pastikan setiap field ada, baru update
       if (typeof d.suhu === 'number') {
         updateSuhu(d.suhu);
       }

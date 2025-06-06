@@ -1,4 +1,12 @@
-// ========= Bagian 1: Inisialisasi Chart.js =========
+// ===============================
+//  script1.js (di‐update)
+// ===============================
+
+// ======= Bagian 0: Sesuaikan Node yang Akan Ditampilkan =======
+const NODE_ID = 'node3';  
+// Jika ingin gunakan untuk node3, cukup ganti menjadi: const NODE_ID = 'node3';
+
+// ======= Bagian 1: Inisialisasi Chart.js untuk Node Ini =======
 const charts = {};
 
 function createGauge(id) {
@@ -24,20 +32,21 @@ function createGauge(id) {
   });
 }
 
-// Buat empat gauge untuk masing-masing sensor
+// Karena HTML Anda punya empat gauge dengan ID: 
+//   'curahHujan', 'kelembaban', 'getaran', 'kemiringan',
+// maka kita inisialisasi semua di sini:
 charts.curahHujan = createGauge('curahHujan');
-charts.kelembaban   = createGauge('kelembaban');
-charts.getaran      = createGauge('getaran');
-charts.kemiringan   = createGauge('kemiringan');
+charts.kelembaban  = createGauge('kelembaban');
+charts.getaran     = createGauge('getaran');
+charts.kemiringan  = createGauge('kemiringan');
 
 function updateGauge(name, value) {
   if (charts[name]) {
-    // Update nilai pada Chart.js
     charts[name].data.datasets[0].data[0] = value;
     charts[name].data.datasets[0].data[1] = 100 - value;
     charts[name].update();
-    // Update teks di bawah gauge
-    document.getElementById(name + 'Val').textContent = `${capitalize(name)}: ${value}`;
+    document.getElementById(name + 'Val').textContent =
+      `${capitalize(name)}: ${value}`;
   }
 }
 
@@ -63,12 +72,20 @@ const mqttOptions = {
   password: 'Qwerty123',
 };
 
+
+
 const client = mqtt.connect(mqttBrokerUrl, mqttOptions);
 
 client.on('connect', () => {
-  console.log('🚀 Terhubung ke Broker MQTT via WebSocket');
-  // Daftarkan topik-topik yang ingin disubscribe
-  client.subscribe('node3', { qos: 0 });
+  console.log(`🚀 Terhubung ke Broker MQTT (Node: ${NODE_ID})`);
+  // Subscribe hanya pada topik sesuai NODE_ID
+  client.subscribe(NODE_ID, { qos: 0 }, (err) => {
+    if (err) {
+      console.error('❌ Gagal subscribe topik:', NODE_ID, err);
+    } else {
+      console.log('✅ Berhasil subscribe topik:', NODE_ID);
+    }
+  });
 });
 
 client.on('error', (err) => {
@@ -81,15 +98,17 @@ client.on('reconnect', () => {
 
 client.on('message', (topic, payload) => {
   try {
+    // Tujuan kita hanya memproses pesan dari topik yang sama dengan NODE_ID
+    if (topic !== NODE_ID) return;
+
     const message = payload.toString();
     const parsed  = JSON.parse(message);
-
-    // ---- Sesuaikan parsing: 
-    // parsed.data adalah objek { suhu:…, curahHujan:…, kelembaban:…, getaran:…, kemiringan:… }
-    if (parsed.node === 'node3' && parsed.data) {
+    // Diasumsikan payload JSON-nya selalu berformat:
+    //   { "node": "node3", "data": { suhu:…, curahHujan:…, kelembaban:…, getaran:…, kemiringan:… } }
+    // Pastikan 'parsed.node' sama dengan NODE_ID sebelum update UI
+    if (parsed.node === NODE_ID && parsed.data) {
       const d = parsed.data;
 
-      // Pastikan setiap field ada, baru update
       if (typeof d.suhu === 'number') {
         updateSuhu(d.suhu);
       }
