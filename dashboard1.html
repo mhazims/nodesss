@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard Node 1</title>
 
-  <!-- Link ke file CSS eksternal -->
+  <!-- CSS eksternal -->
   <link rel="stylesheet" href="style1.css" />
 
   <!-- Chart.js (via CDN) -->
@@ -18,19 +18,19 @@
 
   <div class="dashboard">
     <div class="card">
-      <canvas id="curahHujan"></canvas>
+      <canvas id="curahHujan" width="200" height="100"></canvas>
       <p id="curahHujanVal">Curah Hujan: --</p>
     </div>
     <div class="card">
-      <canvas id="kelembaban"></canvas>
+      <canvas id="kelembaban" width="200" height="100"></canvas>
       <p id="kelembabanVal">Kelembaban: --</p>
     </div>
     <div class="card">
-      <canvas id="getaran"></canvas>
+      <canvas id="getaran" width="200" height="100"></canvas>
       <p id="getaranVal">Getaran: --</p>
     </div>
     <div class="card">
-      <canvas id="kemiringan"></canvas>
+      <canvas id="kemiringan" width="200" height="100"></canvas>
       <p id="kemiringanVal">Kemiringan: --</p>
     </div>
   </div>
@@ -44,7 +44,7 @@
     <button onclick="alert('Menampilkan hasil')">HASIL</button>
   </div>
 
-  <!-- Script JS eksternal -->
+  <!-- Pastikan nama file JS-nya cocok: -->
   <script src="script1.js"></script>
 </body>
 </html>
