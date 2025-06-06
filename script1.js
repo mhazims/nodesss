@@ -56,7 +56,7 @@ const mqttBrokerUrl = 'wss://94b3a6f75c324d08b52109ee28ae0e35.s1.eu.hivemq.cloud
 const mqttOptions = {
   keepalive: 60,
 //   clientId: 'dashboard_node2_' + Math.random().toString(16).substr(2, 8),
-  clientId: '5e46a5cf-cc11-4b74-9f80-dc8e5f78951e',
+  clientId: '7d05d137-89bf-460f-8ac2-1ebf0aec42b9',
   reconnectPeriod: 1000,  // coba koneksi ulang tiap 1 detik jika terputus
   clean: true,
   username: 'oktatata',
