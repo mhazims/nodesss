@@ -2,7 +2,7 @@
 const charts = {};
 
 function createGauge(id) {
-  const ctx = document.getElementById(id).getContext('1d');
+  const ctx = document.getElementById(id).getContext('2d');
   return new Chart(ctx, {
     type: 'doughnut',
     data: {
