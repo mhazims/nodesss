@@ -50,16 +50,16 @@ function capitalize(str) {
 }
 
 // ========= Bagian 2: Koneksi MQTT via WebSocket =========
-const mqttBrokerUrl = 'wss://d69e9399d9e24e8f8ea58ef3424a9324.s1.eu.hivemq.cloud:8884/mqtt';
+const mqttBrokerUrl = 'wss://94b3a6f75c324d08b52109ee28ae0e35.s1.eu.hivemq.cloud:8884/mqtt';
 // Jika broker Anda menggunakan TLS, ganti menjadi 'wss://server.landslidemonit.web.id:8083' (misalnya)
 
 const mqttOptions = {
   keepalive: 60,
-//   clientId: 'dashboard_node3_' + Math.random().toString(16).substr(2, 8),
-  clientId: '5e46a5cf-cc11-4b74-9f80-dc8e5f78951e',
+//   clientId: 'dashboard_node1_' + Math.random().toString(16).substr(2, 8),
+  clientId: '7d05d137-89bf-460f-8ac2-1ebf0aec42b9',
   reconnectPeriod: 1000,  // coba koneksi ulang tiap 1 detik jika terputus
   clean: true,
-  username: 'oktatata',
+  username: 'oktatata3',
   password: 'Qwerty123',
 };
 
