@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landslide Monitoring - Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('bg-welcome.jpg') no-repeat center center fixed; /* Ganti sesuai file background */
+      background-size: cover;
+      font-family: 'Inter', sans-serif;
+      color: #1e3a5f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 50px 40px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 2.6em;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    p.language {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .btn-next {
+      margin-top: 30px;
+      background-color: #1e3a5f;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-next:hover {
+      background-color: #3a6db3;
+    }
+  </style>
+</head>
+<body>
+  <p class="language">English</p>
+
+  <div class="overlay">
+    <h1>WELCOME TO<br>LANDSLIDE MONITORING SYSTEM</h1>
+    <button class="btn-next" onclick="location.href='monitoring.html'">NEXT</button>
+  </div>
+</body>
+</html>

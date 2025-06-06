@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Node 2</title>
+
+  <!-- Link ke file CSS eksternal -->
+  <link rel="stylesheet" href="style2.css" />
+
+  <!-- Chart.js (via CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- MQTT.js (via CDN) -->
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+  <div class="header">DASHBOARD NODE 2</div>
+
+  <div class="dashboard">
+    <div class="card">
+      <canvas id="curahHujan"></canvas>
+      <p id="curahHujanVal">Curah Hujan: --</p>
+    </div>
+    <div class="card">
+      <canvas id="kelembaban"></canvas>
+      <p id="kelembabanVal">Kelembaban: --</p>
+    </div>
+    <div class="card">
+      <canvas id="getaran"></canvas>
+      <p id="getaranVal">Getaran: --</p>
+    </div>
+    <div class="card">
+      <canvas id="kemiringan"></canvas>
+      <p id="kemiringanVal">Kemiringan: --</p>
+    </div>
+  </div>
+
+  <div class="temperature-box" id="suhuBox">
+    SUHU: -- &deg;C
+  </div>
+
+  <div class="btn-container">
+    <button onclick="window.history.back()">KEMBALI</button>
+    <button onclick="alert('Menampilkan hasil')">HASIL</button>
+  </div>
+
+  <!-- Script JS eksternal -->
+  <script src="script2.js"></script>
+</body>
+</html>
